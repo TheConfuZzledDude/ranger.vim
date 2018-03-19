@@ -5,7 +5,6 @@
 " Permission is hereby granted, free of charge, to any person obtaining
 " a copy of this software and associated documentation files (the
 " "Software"), to deal in the Software without restriction, including
-" without limitation the rights to use, copy, modify, merge, publish,
 " distribute, sublicense, and/or sell copies of the Software, and to
 " permit persons to whom the Software is furnished to do so, subject to
 " the following conditions:
@@ -51,7 +50,7 @@ if has('nvim')
 
                 if filereadable(has("win32") ? system("wsl wslpath -m " . s:choice_file_path)[:-2] : s:choice_file_path)
                     exec system(s:wsl. 'sed -ie "s/ /\\\ /g" ' . s:choice_file_path)
-                    exec 'argadd ' . (has("win32") ? system('wsl wslpath -m ' . system('wsl cat ' . s:choice_file_path . ' | wsl tr "\\n" " "'))[:-2] : system('wsl cat ' . s:choice_file_path . ' | tr"\\n" " "'))
+                    exec 'argadd ' . (has("win32") ? system('wsl wslpath -m ' . system('wsl cat ' . s:choice_file_path . ' | wsl tr "\\n" " "'))[:-2] : system(s:wsl. 'cat ' . s:choice_file_path . ' | tr" \\n" " "'))
                     exec self.edit_cmd . ( has("win32") ? system("wsl wslpath -m " . system('wsl head -n1 ' . s:choice_file_path)) : system(s:wsl. 'head -n1 ' . s:choice_file_path))
                     call system(s:wsl. 'rm ' . s:choice_file_path)
                 endif
@@ -71,7 +70,7 @@ else
         exec 'silent !' . s:wsl. 'ranger --choosefiles=' . s:choice_file_path . ' --selectfile="' . currentPath . '"'
         if filereadable(s:choice_file_path)
             exec system(s:wsl. 'sed -ie "s/ /\\\ /g" ' . s:choice_file_path)
-            exec 'argadd ' . (has("win32") ? system('wsl wslpath -m ' . system('wsl cat ' . s:choice_file_path . ' | wsl tr "\\n" " "'))[:-2] : system('wsl cat ' . s:choice_file_path . ' | tr"\\n" " "'))
+            exec 'argadd ' . (has("win32") ? system('wsl wslpath -m ' . system('wsl cat ' . s:choice_file_path . ' | wsl tr "\\n" " "'))[:-2] : system(s:wsl .'cat ' . s:choice_file_path . ' | tr "\\n" " "'))
             exec a:edit_cmd . ( has("win32") ? system("wsl wslpath -m " . system('wsl head -n1 ' . s:choice_file_path)) : system(s:wsl. 'head -n1 ' . s:choice_file_path))
 
             call system(s:wsl. 'rm ' . s:choice_file_path)
