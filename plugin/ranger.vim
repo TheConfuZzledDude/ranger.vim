@@ -50,7 +50,7 @@ if has('nvim')
 
                 if filereadable(has("win32") ? system("wsl wslpath -m " . s:choice_file_path)[:-2] : s:choice_file_path)
                     exec system(s:wsl. 'sed -ie "s/ /\\\ /g" ' . s:choice_file_path)
-                    exec 'argadd ' . (has("win32") ? system('wsl wslpath -m ' . system('wsl cat ' . s:choice_file_path . ' | wsl tr "\\n" " "'))[:-2] : system(s:wsl. 'cat ' . s:choice_file_path . ' | tr" \\n" " "'))
+                    exec 'argadd ' . (has("win32") ? system('wsl wslpath -m ' . system('wsl cat ' . s:choice_file_path . ' | wsl tr "\\n" " "'))[:-2] : system(s:wsl. 'cat ' . s:choice_file_path . ' | tr " \\n" " "'))
                     exec self.edit_cmd . ( has("win32") ? system("wsl wslpath -m " . system('wsl head -n1 ' . s:choice_file_path)) : system(s:wsl. 'head -n1 ' . s:choice_file_path))
                     call system(s:wsl. 'rm ' . s:choice_file_path)
                 endif
